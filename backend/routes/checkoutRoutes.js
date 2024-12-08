@@ -1,12 +1,9 @@
 const express = require('express');
 const checkoutController = require('../controllers/checkoutController');
-const cartModel = require('../models/cartModel');
-const discountService = require('../services/discountService');
-const orders = [];
 
 const router = express.Router();
 
-router.post('/', checkoutController.checkout);
+router.post('/', checkoutController.checkoutCart);
 
 module.exports = router;
 

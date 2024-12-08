@@ -35,24 +35,42 @@ const AdminPage = () => {
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
-      {message && <p className="mb-4 text-green-500">{message}</p>}
-      <div className="mb-4">
-        <h2 className="text-lg font-bold">Admin Stats:</h2>
-        <ul className="list-disc pl-6">
-          <li>Total Items Purchased: {stats.totalItemsPurchased}</li>
-          <li>Total Purchase Amount: ₹{stats.totalPurchaseAmount}</li>
-          <li>Discount Codes Generated: {stats.discountCodesGenerated}</li>
-          <li>Total Discount Applied: ₹{stats.totalDiscountApplied}</li>
-        </ul>
+    <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-12 text-white">
+      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6 text-gray-800">
+        <h1 className="text-3xl font-bold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">
+          Admin Dashboard
+        </h1>
+        {message && <p className="mb-4 text-green-500 text-center">{message}</p>}
+        <div className="mb-6">
+          <h2 className="text-2xl font-semibold mb-4">Admin Stats:</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-gradient-to-r from-green-400 to-blue-500 p-4 rounded-lg shadow-md">
+              <h3 className="text-lg font-bold">Total Items Purchased</h3>
+              <p className="text-2xl">{stats.totalItemsPurchased}</p>
+            </div>
+            <div className="bg-gradient-to-r from-yellow-400 to-red-500 p-4 rounded-lg shadow-md">
+              <h3 className="text-lg font-bold">Total Purchase Amount</h3>
+              <p className="text-2xl">₹{stats.totalPurchaseAmount}</p>
+            </div>
+            <div className="bg-gradient-to-r from-pink-400 to-purple-500 p-4 rounded-lg shadow-md">
+              <h3 className="text-lg font-bold">Discount Codes Generated</h3>
+              <p className="text-2xl">{stats.discountCodesGenerated}</p>
+            </div>
+            <div className="bg-gradient-to-r from-indigo-400 to-blue-500 p-4 rounded-lg shadow-md">
+              <h3 className="text-lg font-bold">Total Discount Applied</h3>
+              <p className="text-2xl">₹{stats.totalDiscountApplied}</p>
+            </div>
+          </div>
+        </div>
+        <div className="text-center">
+          <button
+            onClick={handleGenerateDiscount}
+            className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-lg shadow-md hover:from-blue-600 hover:to-purple-700 transition duration-300"
+          >
+            Generate Discount Code
+          </button>
+        </div>
       </div>
-      <button
-        onClick={handleGenerateDiscount}
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
-      >
-        Generate Discount Code
-      </button>
     </div>
   );
 };

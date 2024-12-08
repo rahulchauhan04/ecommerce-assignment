@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ProductCard = ({ product, onAddToCart }) => {
+const ProductCard = ({ product, onAddToCart, isAdded }) => {
   return (
-    <div className="border p-4 rounded-lg shadow-lg">
+    <div className={`border p-4 rounded-lg shadow-lg ${isAdded ? 'bg-green-100' : ''}`}>
       <h2 className="text-lg font-bold">{product.name}</h2>
       <p className="text-sm text-gray-500">{product.description}</p>
       <p className="text-md font-semibold">₹{product.price}</p>

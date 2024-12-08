@@ -1,5 +1,5 @@
 const discountService = require('../services/discountService');
-const orders = [];
+const { orders } = require('./checkoutController'); 
 const discountCodes = discountService.getDiscountCodes(); // Assuming this function exists to get all discount codes
 
 exports.generateDiscountCode = (req, res) => {
@@ -14,7 +14,7 @@ exports.generateDiscountCode = (req, res) => {
 
 exports.getAdminStats = (req, res) => {
   try {
-    const totalItemsPurchased = orders.reduce((sum, order) => sum + order.cart.length, 0);
+    const totalItemsPurchased = orders.reduce((sum, order) => sum + order.items.length, 0);
     const totalPurchaseAmount = orders.reduce((sum, order) => sum + order.finalAmount, 0);
     const discountCodesGenerated = discountCodes.length;
     const totalDiscountApplied = orders.reduce((sum, order) => sum + (order.discountApplied ? order.totalAmount - order.finalAmount : 0), 0);

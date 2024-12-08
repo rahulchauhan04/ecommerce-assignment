@@ -5,6 +5,7 @@ import { getCartItems, removeCartItem, getCartTotal } from '../services/cartAPI'
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,6 +25,7 @@ const CartPage = () => {
     try {
       await removeCartItem(productId);
       setCartItems(cartItems.filter((item) => item.productId !== productId));
+      setMessage('Item removed from cart successfully!');
     } catch (err) {
       setError('Failed to remove item');
     }
@@ -33,8 +35,8 @@ const CartPage = () => {
     try {
       const totalPrice = await getCartTotal();
       navigate('/checkout', { state: { totalPrice } });
-    } catch (error) {
-      console.error('Failed to fetch total price:', error);
+    } catch (err) {
+      setError('Failed to proceed to checkout');
     }
   };
 
@@ -46,6 +48,7 @@ const CartPage = () => {
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
       {error && <p className="text-red-500">{error}</p>}
+      {message && <p className="text-green-500">{message}</p>}
       <ul className="space-y-4">
         {cartItems.map((item, index) => (
           <li key={`${item.productId}-${index}`} className="border p-4 rounded-lg">

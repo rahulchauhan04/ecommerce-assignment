@@ -9,29 +9,31 @@ const CheckoutPage = () => {
   const location = useLocation();
   const { totalPrice } = location.state || { totalPrice: 0 }; // Default to 0 if not provided
 
-  const handleCheckout = async () => {
+  // Handle the checkout process
+  const handleCheckout = async (e) => {
+    e.preventDefault();
     try {
-      const response = await checkoutCart(discountCode);
-      const { totalAmount, finalAmount, discountApplied } = response;
-
-      setMessage(`Checkout successful! Total: ₹${totalAmount}, Final: ₹${finalAmount}, Discount Applied: ${discountApplied}`);
-      setTimeout(() => navigate('/'), 6000);
+      const response = await checkoutCart({ discountCode });
+      setMessage(`Checkout successful! Order details: ${JSON.stringify(response)}`);
+      setTimeout(() => {
+        navigate('/'); // Redirect to home page after a success message
+      }, 3000);
     } catch (error) {
-      setMessage('Failed to checkout: ' + error.message);
+      if (error.response && error.response.status === 400) {
+        setMessage(`Failed to checkout: ${error.response.data.message}`);
+      } else {
+        setMessage('An unexpected error occurred during checkout.');
+      }
     }
   };
 
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Checkout</h1>
-      {message && <p className="mb-4 text-green-500">{message}</p>}
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleCheckout();
-        }}
-        className="space-y-4"
-      >
+      <div className="checkout-message">
+        {message && <p className={message.includes('Failed') ? 'text-red-500' : 'text-green-500'}>{message}</p>}
+      </div>
+      <form onSubmit={handleCheckout} className="space-y-4">
         <div>
           <label className="block text-gray-700 font-bold mb-2">Discount Code</label>
           <input
